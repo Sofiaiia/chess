@@ -1,9 +1,6 @@
 package ax.ha.tdd.chess.engine;
 
-import ax.ha.tdd.chess.engine.pieces.ChessPiece;
-import ax.ha.tdd.chess.engine.pieces.ChessPieceStub;
-import ax.ha.tdd.chess.engine.pieces.Pawn;
-import ax.ha.tdd.chess.engine.pieces.PieceType;
+import ax.ha.tdd.chess.engine.pieces.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -82,6 +79,10 @@ public class Chessboard implements Iterable<ChessPiece[]> {
                 case PAWN:
                     canMove = new Pawn(pieceToMove.getPieceType(), pieceToMove.getPlayer(), pieceToMove.getLocation()).canMove(this, new Coordinates(moves[1]));
                     piece = new Pawn(pieceToMove.getPieceType(), pieceToMove.getPlayer(), new Coordinates(moves[1]));
+                    break;
+                case ROOK:
+                    canMove = new Rook(pieceToMove.getPieceType(),pieceToMove.getPlayer(),pieceToMove.getLocation()).canMove(this,new Coordinates(moves[1]));
+                    piece = new Rook(pieceToMove.getPieceType(), pieceToMove.getPlayer(), new Coordinates(moves[1]));
                     break;
                 default:
                     canMove = false;

@@ -12,7 +12,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public String getSymbol() {
-        return "P";
+        return pieceType.getSymbol();
     }
 
     @Override
@@ -31,7 +31,11 @@ public class Pawn extends ChessPiece {
         }else{
             if(checkDiagonal(destination)){
                 if (chessboard.isOccupied(destination.getX(),destination.getY())){
-                    return true;
+                    if(checkColorDest(chessboard,destination)){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
                 else{
                     return false;
@@ -77,6 +81,18 @@ public class Pawn extends ChessPiece {
             }else{
                 return false;
             }
+        }
+    }
+
+    private boolean checkColorDest(Chessboard chessboard, Coordinates destination){
+        if(chessboard.isOccupied(destination.getX(),destination.getY())){
+            if(chessboard.getPiece(destination).getPlayer() == player){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            return true;
         }
     }
 }
