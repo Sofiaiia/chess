@@ -17,8 +17,8 @@ public class Rook extends ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
-        if(checkXY(destination)){
-            if(checkOccupiedOnWay(destination, chessboard)){
+        if((destination.getX() == location.getX() && destination.getY() != location.getY()) || (destination.getX() != location.getX() && destination.getY() == location.getY())){
+            if(checkMove(destination, chessboard)){
                 if(checkColorDest(chessboard,destination)){
                     return true;
                 }else{
@@ -32,50 +32,30 @@ public class Rook extends ChessPiece{
         }
     }
 
-    private boolean checkXY(Coordinates destination){
-        if((destination.getX() == location.getX() && destination.getY() != location.getY()) || (destination.getX() != location.getX() && destination.getY() == location.getY())){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    private boolean checkMove(Coordinates dest, Chessboard board){
+        int numOfSteps = 0;
 
-    private boolean checkOccupiedOnWay(Coordinates destination, Chessboard chessboard){
-        int diffX = location.getX() - destination.getX();
-        int diffY = location.getY() -destination.getY();
-            if(diffY == 0 && diffX != 0){
-                if(diffX > 0){
-                    for (int i = location.getX()-1; i > destination.getX(); i--){
-                        if (chessboard.isOccupied(i,destination.getY())){
-                            return false;
-                        }
-                    }
-                    return true;
-                }else {
-                    for (int i = location.getX()+1; i < destination.getX(); i++){
-                        if (chessboard.isOccupied(i,destination.getY())){
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }else{
-                if(diffY > 0){
-                    for (int i = location.getY()-1; i > destination.getY(); i--){
-                        if (chessboard.isOccupied(destination.getX(),i)){
-                            return false;
-                        }
-                    }
-                    return true;
-                }else {
-                    for (int i = location.getY()+1; i < destination.getY(); i++){
-                        if (chessboard.isOccupied(destination.getX(),i)){
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+        //kolla om d e åt höger/vänster eller upp/ner
+        int directionX = Integer.compare(0, location.getX() - dest.getX());
+        int directionY =  Integer.compare(0, location.getY() - dest.getY());
+
+        //hur många steg, oavsett plus eller minus
+        if (directionX != 0 && directionY == 0){
+            numOfSteps = Math.abs(location.getX() - dest.getX());
+        } else if (directionX == 0 && directionY != 0) {
+            numOfSteps = Math.abs(location.getY() - dest.getY());
+        }
+
+        //kolla pjäsens väg om det finns nått där
+        for (int i = 1; i < numOfSteps; i++) {
+            if(directionX != 0 && board.isOccupied(location.getX() + i * directionX, location.getY())){
+                return false;
             }
+            if (directionY != 0 && board.isOccupied(location.getX(), location.getY() + i * directionY)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean checkColorDest(Chessboard chessboard, Coordinates destination){
