@@ -2,6 +2,7 @@ package ax.ha.tdd.chess.engine;
 
 import ax.ha.tdd.chess.engine.pieces.ChessPiece;
 import ax.ha.tdd.chess.engine.pieces.ChessPieceStub;
+import ax.ha.tdd.chess.engine.pieces.Pawn;
 import ax.ha.tdd.chess.engine.pieces.PieceType;
 
 import java.util.Iterator;
@@ -34,6 +35,10 @@ public class Chessboard implements Iterable<ChessPiece[]> {
         board[chessPiece.getLocation().getY()][chessPiece.getLocation().getX()] = chessPiece;
     }
 
+    public void removePiece(final ChessPiece chessPiece) {
+        board[chessPiece.getLocation().getY()][chessPiece.getLocation().getX()] = null;
+    }
+
     /**
      * Helper method to initialize chessboard with {@link ChessPieceStub}.
      * Basically mirrors all added pieces for both players.
@@ -56,5 +61,42 @@ public class Chessboard implements Iterable<ChessPiece[]> {
     @Override
     public Iterator<ChessPiece[]> iterator() {
         return List.of(board).iterator();
+    }
+
+    public boolean isOccupied(int x, int y){
+        if(board[y][x] == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean movePiece(String move, Player player){
+        String[] moves = move.split("-");
+        ChessPiece pieceToMove = getPiece(new Coordinates(moves[0]));
+        if(pieceToMove.getPlayer().equals(player)) {
+            Boolean canMove = false;
+            ChessPiece piece = null;
+
+            switch (pieceToMove.getPieceType()) {
+                case PAWN:
+                    canMove = new Pawn(pieceToMove.getPieceType(), pieceToMove.getPlayer(), pieceToMove.getLocation()).canMove(this, new Coordinates(moves[1]));
+                    piece = new Pawn(pieceToMove.getPieceType(), pieceToMove.getPlayer(), new Coordinates(moves[1]));
+                    break;
+                default:
+                    canMove = false;
+            }
+
+            if (canMove) {
+                addPiece(piece);
+                removePiece(pieceToMove);
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            //fel spelare
+            return false;
+        }
     }
 }
