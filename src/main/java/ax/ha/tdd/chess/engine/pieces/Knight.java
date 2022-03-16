@@ -24,7 +24,7 @@ public class Knight extends ChessPiece{
             if(destination.equals(coordinates)){
                 return true;
             }
-        } 
+        }
         return false;
     }
 }
