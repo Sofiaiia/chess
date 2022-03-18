@@ -1,5 +1,6 @@
 package ax.ha.tdd.chess.engine;
 
+import ax.ha.tdd.chess.engine.pieces.King;
 import ax.ha.tdd.chess.engine.pieces.Pawn;
 import ax.ha.tdd.chess.engine.pieces.PieceType;
 import org.junit.jupiter.api.Assertions;
@@ -92,5 +93,13 @@ public class PawnTest {
         board.addPiece(new Pawn(PieceType.PAWN,Player.WHITE,new Coordinates("b6")));
         board.movePiece("a7-b6",Player.BLACK);
         Assertions.assertEquals("B", board.getPiece(new Coordinates("b6")).getPlayer().getSymbol());
+    }
+    @Test
+    public void pawnAttackWhiteKing(){
+        final Chessboard board = new Chessboard();
+        board.addPiece(new Pawn(PieceType.PAWN,Player.BLACK,new Coordinates("a7")));
+        board.addPiece(new King(PieceType.KING,Player.WHITE,new Coordinates("b6")));
+        board.movePiece("a7-b6",Player.BLACK);
+        Assertions.assertEquals("B", board.getPiece(new Coordinates("a7")).getPlayer().getSymbol());
     }
 }

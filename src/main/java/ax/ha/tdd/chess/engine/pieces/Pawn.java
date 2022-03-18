@@ -32,7 +32,10 @@ public class Pawn extends ChessPiece {
             if(checkDiagonal(destination)){
                 if (chessboard.isOccupied(destination.getX(),destination.getY())){
                     if(checkColorDest(chessboard,destination)){
-                        return true;
+                        if(checkKing(chessboard,destination)){
+                            return true;
+                        }
+                        return false;
                     }else{
                         return false;
                     }
@@ -94,5 +97,12 @@ public class Pawn extends ChessPiece {
         }else{
             return true;
         }
+    }
+
+    private boolean checkKing(Chessboard chessboard, Coordinates destination){
+        if (chessboard.isOccupied(destination.getX(),destination.getY()) && chessboard.getPiece(destination).getPieceType().equals(PieceType.KING)){
+            return false;
+        }
+        return true;
     }
 }

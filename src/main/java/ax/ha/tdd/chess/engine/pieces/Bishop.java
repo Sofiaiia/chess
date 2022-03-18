@@ -18,7 +18,10 @@ public class Bishop extends ChessPiece{
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
         if(Math.abs(location.getX() - destination.getX()) == Math.abs(location.getY() - destination.getY())){
             if (checkMove(chessboard, destination)){
-                return true;
+                if(checkKing(chessboard,destination)){
+                    return true;
+                }
+                return false;
             } else{
                 return false;
             }
@@ -34,10 +37,17 @@ public class Bishop extends ChessPiece{
         int directionY =  Integer.compare(0, location.getY() - destination.getY());
 
         for (int i = 1; i < steps; i++) {
-            if(board.isOccupied(location.getX() + i * directionX, location.getY() + i * directionY)){
+            if(board.isOccupied(location.getX() + i * directionX, location.getY() + i * directionY) && !board.getPiece(new Coordinates(location.getX() + i * directionX, location.getY() + i * directionY)).getPlayer().equals(player)){
                 return false;
             }
         }
         return true;
         }
+
+    private boolean checkKing(Chessboard chessboard, Coordinates destination){
+        if (chessboard.isOccupied(destination.getX(),destination.getY()) && chessboard.getPiece(destination).getPieceType().equals(PieceType.KING)){
+            return false;
+        }
+        return true;
+    }
 }

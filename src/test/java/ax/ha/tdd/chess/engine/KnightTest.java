@@ -1,6 +1,7 @@
 package ax.ha.tdd.chess.engine;
 
 import ax.ha.tdd.chess.engine.pieces.ChessPiece;
+import ax.ha.tdd.chess.engine.pieces.King;
 import ax.ha.tdd.chess.engine.pieces.Knight;
 import ax.ha.tdd.chess.engine.pieces.PieceType;
 import org.junit.jupiter.api.Assertions;
@@ -80,5 +81,15 @@ public class KnightTest {
         board.addPiece(new Knight(PieceType.KNIGHT,Player.BLACK,new Coordinates("g3")));
         board.movePiece("e4-g3",Player.WHITE);
         Assertions.assertEquals(knight, board.getPiece(new Coordinates("g3")));
+    }
+
+    @Test
+    public void knightAttackKing(){
+        final Chessboard board = new Chessboard();
+        ChessPiece knight = new Knight(PieceType.KNIGHT,Player.WHITE,new Coordinates("e4"));
+        board.addPiece(knight);
+        board.addPiece(new King(PieceType.KING,Player.BLACK,new Coordinates("g3")));
+        board.movePiece("e4-g3",Player.WHITE);
+        Assertions.assertEquals(knight, board.getPiece(new Coordinates("e4")));
     }
 }

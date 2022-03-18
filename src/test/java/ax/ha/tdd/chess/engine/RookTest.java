@@ -1,6 +1,7 @@
 package ax.ha.tdd.chess.engine;
 
 import ax.ha.tdd.chess.engine.pieces.ChessPiece;
+import ax.ha.tdd.chess.engine.pieces.King;
 import ax.ha.tdd.chess.engine.pieces.PieceType;
 import ax.ha.tdd.chess.engine.pieces.Rook;
 import org.junit.jupiter.api.Assertions;
@@ -110,5 +111,14 @@ public class RookTest {
         board.addPiece(new Rook(PieceType.ROOK,Player.WHITE,new Coordinates("h6")));
         board.movePiece("h8-h6",Player.BLACK);
         Assertions.assertEquals(rook, board.getPiece(new Coordinates("h6")));
+    }
+    @Test
+    public void rookAttackKing(){
+        final Chessboard board = new Chessboard();
+        ChessPiece rook = new Rook(PieceType.ROOK,Player.BLACK,new Coordinates("h8"));
+        board.addPiece(rook);
+        board.addPiece(new King(PieceType.KING,Player.WHITE,new Coordinates("h6")));
+        board.movePiece("h8-h6",Player.BLACK);
+        Assertions.assertEquals(rook, board.getPiece(new Coordinates("h8")));
     }
 }

@@ -20,7 +20,10 @@ public class Rook extends ChessPiece{
         if((destination.getX() == location.getX() && destination.getY() != location.getY()) || (destination.getX() != location.getX() && destination.getY() == location.getY())){
             if(checkMove(destination, chessboard)){
                 if(checkColorDest(chessboard,destination)){
-                    return true;
+                    if(checkKing(chessboard,destination)){
+                        return true;
+                    }
+                    return false;
                 }else{
                     return false;
                 }
@@ -35,11 +38,9 @@ public class Rook extends ChessPiece{
     private boolean checkMove(Coordinates dest, Chessboard board){
         int numOfSteps = 0;
 
-        //kolla om d e åt höger/vänster eller upp/ner
         int directionX = Integer.compare(0, location.getX() - dest.getX());
         int directionY =  Integer.compare(0, location.getY() - dest.getY());
 
-        //hur många steg, oavsett plus eller minus
         if (directionX != 0 && directionY == 0){
             numOfSteps = Math.abs(location.getX() - dest.getX());
         } else if (directionX == 0 && directionY != 0) {
@@ -68,5 +69,11 @@ public class Rook extends ChessPiece{
         }else{
             return true;
         }
+    }
+    private boolean checkKing(Chessboard chessboard, Coordinates destination){
+        if (chessboard.isOccupied(destination.getX(),destination.getY()) && chessboard.getPiece(destination).getPieceType().equals(PieceType.KING)){
+            return false;
+        }
+        return true;
     }
 }

@@ -96,6 +96,10 @@ public class Chessboard implements Iterable<ChessPiece[]> {
                     canMove = new Queen(pieceToMove.getPieceType(),pieceToMove.getPlayer(),pieceToMove.getLocation()).canMove(this,new Coordinates(moves[1]));
                     piece = new Queen(pieceToMove.getPieceType(), pieceToMove.getPlayer(), new Coordinates(moves[1]));
                     break;
+                case KING:
+                    canMove = new King(pieceToMove.getPieceType(),pieceToMove.getPlayer(),pieceToMove.getLocation()).canMove(this,new Coordinates(moves[1]));
+                    piece = new King(pieceToMove.getPieceType(), pieceToMove.getPlayer(), new Coordinates(moves[1]));
+                    break;
                 default:
                     canMove = false;
             }
