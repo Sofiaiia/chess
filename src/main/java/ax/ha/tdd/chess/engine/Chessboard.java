@@ -107,6 +107,9 @@ public class Chessboard implements Iterable<ChessPiece[]> {
             if (canMove) {
                 addPiece(piece);
                 removePiece(pieceToMove);
+                if(pieceToMove.getPieceType().equals(PieceType.KING)){
+                    addPiece(new Rook(PieceType.ROOK,player,new Coordinates(moves[0])));
+                }
                 return true;
             } else {
                 return false;

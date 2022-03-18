@@ -120,4 +120,38 @@ public class KingTest {
         board.movePiece("e4-e5",Player.WHITE);
         Assertions.assertEquals("K", board.getPiece(new Coordinates("e5")).getSymbol());
     }
+
+    @Test
+    public void checkCastlingHasMoved(){
+        final Chessboard board = new Chessboard();
+        board.addPiece(new King(PieceType.KING,Player.WHITE,new Coordinates("d1")));
+        Rook rook = new Rook(PieceType.ROOK,Player.WHITE,new Coordinates("a2"));
+        rook.setHasMoved(true);
+        board.addPiece(rook);
+        board.movePiece("d1-a2",Player.WHITE);
+        Assertions.assertEquals("K", board.getPiece(new Coordinates("d1")).getSymbol());
+    }
+
+    @Test
+    public void checkCastlingMove(){
+        final Chessboard board = new Chessboard();
+        board.addPiece(new King(PieceType.KING,Player.WHITE,new Coordinates("d1")));
+        Rook rook = new Rook(PieceType.ROOK,Player.WHITE,new Coordinates("a1"));
+        board.addPiece(rook);
+        board.movePiece("d1-a1",Player.WHITE);
+        Assertions.assertEquals("K", board.getPiece(new Coordinates("a1")).getSymbol());
+        Assertions.assertEquals("R", board.getPiece(new Coordinates("d1")).getSymbol());
+    }
+
+    @Test
+    public void checkCastlingRisk(){
+        final Chessboard board = new Chessboard();
+        board.addPiece(new King(PieceType.KING,Player.WHITE,new Coordinates("d1")));
+        board.addPiece(new Pawn(PieceType.PAWN,Player.BLACK,new Coordinates("c2")));
+        Rook rook = new Rook(PieceType.ROOK,Player.WHITE,new Coordinates("a1"));
+        board.addPiece(rook);
+        board.movePiece("d1-a1",Player.WHITE);
+        Assertions.assertEquals("K", board.getPiece(new Coordinates("d1")).getSymbol());
+        Assertions.assertEquals("R", board.getPiece(new Coordinates("a1")).getSymbol());
+    }
 }

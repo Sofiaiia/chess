@@ -6,6 +6,8 @@ import ax.ha.tdd.chess.engine.Player;
 
 public class Rook extends ChessPiece{
 
+    boolean hasMoved = false;
+
     public Rook(PieceType pieceType, Player player, Coordinates location) {
         super(pieceType, player, location);
     }
@@ -21,6 +23,7 @@ public class Rook extends ChessPiece{
             if(checkMove(destination, chessboard)){
                 if(checkColorDest(chessboard,destination)){
                     if(checkKing(chessboard,destination)){
+                        hasMoved = true;
                         return true;
                     }
                     return false;
@@ -75,5 +78,13 @@ public class Rook extends ChessPiece{
             return false;
         }
         return true;
+    }
+
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
     }
 }
