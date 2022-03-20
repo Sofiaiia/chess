@@ -20,6 +20,8 @@ public class Game {
         return board;
     }
 
+    //MOVE - SUCESS/ILLEGAL MOVE
+    //STATUS FÖR CURRENT PLAYER
     public String getLastMoveResult() {
         //TODO this should be used to show the player what happened
         //Illegal move, correct move, e2 moved to e4 etc.
@@ -35,6 +37,7 @@ public class Game {
         System.out.println("Player tried to perform move: " + move);
         boolean succeeded = board.movePiece(move,getPlayerToMove());
         if (succeeded){
+            //kolla check/checkmate på andra kungen
             turn++;
         }else{
             throw new InvalidMovementException("Invalid movement");

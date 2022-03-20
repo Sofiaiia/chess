@@ -22,12 +22,16 @@ public class Knight extends ChessPiece{
         for(int i = 0; i <= 7; i++){
             Coordinates coordinates = new Coordinates(location.getX() + row[i], location.getY() + col[i]);
             if(destination.equals(coordinates)){
-                if(chessboard.isOccupied(destination.getX(),destination.getY()) && chessboard.getPiece(destination).getPieceType().equals(PieceType.KING)){
+                if(inBounds(destination.getX(),destination.getY()) && chessboard.isOccupied(destination.getX(),destination.getY()) && chessboard.getPiece(destination).getPieceType().equals(PieceType.KING)){
                     return false;
                 }
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean inBounds(int i, int j) {
+        return i >= 0 && i < 8 && j >= 0 && j < 8;
     }
 }

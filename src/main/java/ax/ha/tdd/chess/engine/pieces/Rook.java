@@ -52,10 +52,10 @@ public class Rook extends ChessPiece{
 
         //kolla pjäsens väg om det finns nått där
         for (int i = 1; i < numOfSteps; i++) {
-            if(directionX != 0 && board.isOccupied(location.getX() + i * directionX, location.getY())){
+            if(directionX != 0 && inBounds(location.getX() + i * directionX, location.getY()) && board.isOccupied(location.getX() + i * directionX, location.getY())){
                 return false;
             }
-            if (directionY != 0 && board.isOccupied(location.getX(), location.getY() + i * directionY)){
+            if (directionY != 0 && inBounds(location.getX(), location.getY() + i * directionY) && board.isOccupied(location.getX(), location.getY() + i * directionY)){
                 return false;
             }
         }
@@ -86,5 +86,9 @@ public class Rook extends ChessPiece{
 
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
+    }
+
+    private boolean inBounds(int i, int j) {
+        return i >= 0 && i < 8 && j >= 0 && j < 8;
     }
 }

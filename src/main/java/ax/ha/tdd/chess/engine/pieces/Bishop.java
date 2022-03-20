@@ -37,7 +37,7 @@ public class Bishop extends ChessPiece{
         int directionY =  Integer.compare(0, location.getY() - destination.getY());
 
         for (int i = 1; i < steps; i++) {
-            if(board.isOccupied(location.getX() + i * directionX, location.getY() + i * directionY) && !board.getPiece(new Coordinates(location.getX() + i * directionX, location.getY() + i * directionY)).getPlayer().equals(player)){
+            if(inBounds(location.getX() + i * directionX, location.getY() + i * directionY) && board.isOccupied(location.getX() + i * directionX, location.getY() + i * directionY) && !board.getPiece(new Coordinates(location.getX() + i * directionX, location.getY() + i * directionY)).getPlayer().equals(player)){
                 return false;
             }
         }
@@ -49,5 +49,9 @@ public class Bishop extends ChessPiece{
             return false;
         }
         return true;
+    }
+
+    private boolean inBounds(int i, int j) {
+        return i >= 0 && i < 8 && j >= 0 && j < 8;
     }
 }

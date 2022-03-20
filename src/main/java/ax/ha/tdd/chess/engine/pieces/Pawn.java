@@ -88,7 +88,7 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean checkColorDest(Chessboard chessboard, Coordinates destination){
-        if(chessboard.isOccupied(destination.getX(),destination.getY())){
+        if(inBounds(destination.getX(),destination.getY()) &&chessboard.isOccupied(destination.getX(),destination.getY())){
             if(chessboard.getPiece(destination).getPlayer() == player){
                 return false;
             }else{
@@ -104,5 +104,9 @@ public class Pawn extends ChessPiece {
             return false;
         }
         return true;
+    }
+
+    private boolean inBounds(int i, int j) {
+        return i >= 0 && i < 8 && j >= 0 && j < 8;
     }
 }
