@@ -46,8 +46,8 @@ public class WinningChecker {
 
     private static Coordinates getKingPosition(Chessboard board, Player player){
         Coordinates king = null;
-        for(int i = 0; i < 7 ; i++){
-            for(int j= 0; j < 7; j++){
+        for(int i = 0; i <= 7 ; i++){
+            for(int j= 0; j <= 7; j++){
                 if(board.isOccupied(i,j)){
                     ChessPiece piece = board.getPiece(new Coordinates(i,j));
                     if(piece.getPieceType().equals(PieceType.KING) && piece.getPlayer().equals(player)){

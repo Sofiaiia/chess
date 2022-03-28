@@ -7,12 +7,11 @@ public class Game {
 
     Chessboard board = Chessboard.startingBoard();
 
-    //Feel free to delete this stuff. Just for initial testing.
     boolean isNewGame = true;
     int turn = 0;
+    String message = "";
 
     public Player getPlayerToMove() {
-        //TODO this should reflect the current state.
         return turn % 2 == 0 ?Player.WHITE: Player.BLACK;
     }
 
@@ -20,27 +19,32 @@ public class Game {
         return board;
     }
 
-    //MOVE - SUCESS/ILLEGAL MOVE
-    //STATUS FÖR CURRENT PLAYER
     public String getLastMoveResult() {
-        //TODO this should be used to show the player what happened
-        //Illegal move, correct move, e2 moved to e4 etc.
         if (isNewGame) {
             return "Game hasn't begun";
         }
-        return "Last move was successful (default reply, change this)";
+        return message;
     }
 
     public void move(String move) {
-        //TODO this should trigger your move logic.
-        isNewGame = false;
-        System.out.println("Player tried to perform move: " + move);
-        boolean succeeded = board.movePiece(move,getPlayerToMove());
-        if (succeeded){
-            //kolla check/checkmate på andra kungen
-            turn++;
-        }else{
-            throw new InvalidMovementException("Invalid movement");
+        try{
+            if(WinningChecker.checkState(board,getPlayerToMove()).equals(WinningState.CHECKMATE)){
+                message = "CHECKMATE";
+            }else {
+                if(WinningChecker.checkState(board,getPlayerToMove()).equals(WinningState.CHECK)){
+                  message = getPlayerToMove() + " you are in check!";
+                }
+                isNewGame = false;
+                boolean succeeded = board.movePiece(move, getPlayerToMove());
+                if (succeeded) {
+                    message = getPlayerToMove() + " made a succesful move: " + move;
+                    turn++;
+                } else {
+                    throw new InvalidMovementException("Invalid movement");
+                }
+           }
+        }catch(Exception e){
+            message = getPlayerToMove() + " invalid move: " + move + "!!!";
         }
     }
 }

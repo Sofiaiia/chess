@@ -75,7 +75,7 @@ public class King extends ChessPiece {
             }
             return true;
         } else {
-            if (inBounds(destination.getX() - 1, destination.getY() + 1) && board.isOccupied(destination.getX() - 1, destination.getY() + 1) && !location.equals(new Coordinates(destination.getX() + 1, destination.getY() - 1))) {
+            if (inBounds(destination.getX() - 1, destination.getY() + 1) && board.isOccupied(destination.getX() - 1, destination.getY() + 1) && !location.equals(new Coordinates(destination.getX() - 1, destination.getY() + 1))) {
                 if (board.getPiece(new Coordinates(destination.getX() - 1, destination.getY() + 1)).getPieceType().equals(PieceType.PAWN) && !board.getPiece(new Coordinates(destination.getX() - 1, destination.getY() + 1)).getPlayer().equals(player)) {
                     return false;
                 }
